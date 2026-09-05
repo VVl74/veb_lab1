@@ -1,0 +1,27 @@
+.page {
+    width: 100%;
+}
+.zagolov {
+    font-family: cursive;
+    color: #dc0be3;
+}
+
+.header {
+    font-family: cursive;
+    color: #dc0be3;
+    font-size: 42px;
+    font-weight: bold;
+    text-align: center;
+}
+.pict {
+    max-width: 400px;
+    text-align: center;
+    vertical-align: top;
+}
+
+.results th,
+.results td {
+    border: 1px;
+    padding: 6px;
+    background-color: #dc0be3;
+}
