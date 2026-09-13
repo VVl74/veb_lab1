@@ -2,7 +2,14 @@ const key = 'res';
 
 function ldsave() {
     let raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : [];
+    if (!raw) {
+        return [];
+    }
+    try {
+        return JSON.parse(raw);
+    } catch (e) {
+        return [];
+    }
 }
 
 function save(rows) {
@@ -90,22 +97,55 @@ ctx.font = '14px sans-serif';
 ctx.fillText('x', canvas.width - 32, cy - 10);
 ctx.fillText('y', cx + 8, 32);
 
-const ticks = [
-    [-R, '-R'], [-R / 2, '-R/2'], [R / 2, 'R/2'], [R, 'R']
-];
-ticks.forEach(([v, label]) => {
-    ctx.beginPath();
-    ctx.moveTo(X(v), cy - 5);
-    ctx.lineTo(X(v), cy + 5);
-    ctx.stroke();
-    ctx.fillText(label, X(v) - 12, cy + 18);
 
-    ctx.beginPath();
-    ctx.moveTo(cx - 5, Y(v));
-    ctx.lineTo(cx + 5, Y(v));
-    ctx.stroke();
-    ctx.fillText(label, cx + 8, Y(v) + 4);
-});
+// засечки
+ctx.beginPath();
+ctx.moveTo(X(-R), cy - 5);
+ctx.lineTo(X(-R), cy + 5);
+ctx.stroke();
+ctx.fillText('-R', X(-R) - 12, cy + 18);
+
+ctx.beginPath();
+ctx.moveTo(cx - 5, Y(-R));
+ctx.lineTo(cx + 5, Y(-R));
+ctx.stroke();
+ctx.fillText('-R', cx + 8, Y(-R) + 4);
+
+ctx.beginPath();
+ctx.moveTo(X(-R / 2), cy - 5);
+ctx.lineTo(X(-R / 2), cy + 5);
+ctx.stroke();
+ctx.fillText('-R/2', X(-R / 2) - 12, cy + 18);
+
+ctx.beginPath();
+ctx.moveTo(cx - 5, Y(-R / 2));
+ctx.lineTo(cx + 5, Y(-R / 2));
+ctx.stroke();
+ctx.fillText('-R/2', cx + 8, Y(-R / 2) + 4);
+
+ctx.beginPath();
+ctx.moveTo(X(R / 2), cy - 5);
+ctx.lineTo(X(R / 2), cy + 5);
+ctx.stroke();
+ctx.fillText('R/2', X(R / 2) - 12, cy + 18);
+
+ctx.beginPath();
+ctx.moveTo(cx - 5, Y(R / 2));
+ctx.lineTo(cx + 5, Y(R / 2));
+ctx.stroke();
+ctx.fillText('R/2', cx + 8, Y(R / 2) + 4);
+
+ctx.beginPath();
+ctx.moveTo(X(R), cy - 5);
+ctx.lineTo(X(R), cy + 5);
+ctx.stroke();
+ctx.fillText('R', X(R) - 12, cy + 18);
+
+ctx.beginPath();
+ctx.moveTo(cx - 5, Y(R));
+ctx.lineTo(cx + 5, Y(R));
+ctx.stroke();
+ctx.fillText('R', cx + 8, Y(R) + 4);
 
 
 document.getElementById('check').addEventListener('click', function () {
@@ -115,10 +155,10 @@ document.getElementById('check').addEventListener('click', function () {
         return;
     }
 
-    let x = Number(xNodes[0].value);
+    let x = Number(xvod[0].value);
 
     let yvvod = document.getElementById('y').value.trim();
-    let y = Number(yRaw);
+    let y = Number(yvvod);
     if (yvvod === '' || Number.isNaN(y) || y < -3 || y > 3) {
         alert("Y от -3 до 3");
         return;
@@ -133,6 +173,7 @@ document.getElementById('check').addEventListener('click', function () {
     let r = Number(rvvod[0].value);
 
     let flag = false;
+
     if (x <= 0 && y >= 0 && (x * x + y * y) <= r * r) {
         flag = true;
     }
@@ -140,6 +181,7 @@ document.getElementById('check').addEventListener('click', function () {
     if (x >= 0 && y>= 0 && x + y <= r / 2) {
         flag = true;
     }
+
     if (y <= 0 && x >= 0 && y >= -r &&  x <= r/2) {
         flag = true;
     }
@@ -151,6 +193,7 @@ document.getElementById('check').addEventListener('click', function () {
         popad: flag,
         time: new Date().toISOString()
     });
+
     save(rows);
     renderTable(rows);
 });
