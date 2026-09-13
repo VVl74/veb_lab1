@@ -6,43 +6,119 @@
     <meta name="viewport" content="width=device-width">
     <link rel="icon" href="judaism.png">
     <style>
-        .page {
-            width: 100%;
+        body {
+            margin: 0;
+            padding: 24px;
+            background: #e8f1f8;
+            color: #153047;
         }
+
         .zagolov {
             font-family: monospace;
-            color: #dc0be3;
+            color: #2b7cb5;
             font-size: 24px;
+            margin: 0 0 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .page {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: separate;
+            border-spacing: 16px;
+        }
+
+        .page > thead th {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2b7cb5;
+            text-align: left;
+            padding: 0 4px 4px;
+        }
+
+        .page > tbody > tr > td {
+            width: 33.33%;
+            vertical-align: top;
+            background: #fff;
+            border: 1px solid #c5dcec;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 8px 24px rgba(30, 90, 140, 0.08);
         }
 
         .header {
             font-family: cursive;
-            color: #dc0be3;
+            color: #2b7cb5;
             font-size: 42px;
             font-weight: bold;
             text-align: center;
         }
+
         .pict {
-            max-width: 400px;
             text-align: center;
-            vertical-align: top;
+        }
+
+        canvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid #c5dcec;
+            border-radius: 8px;
+        }
+
+        .output {
+            max-height: 520px;
+            overflow: auto;
+        }
+
+        .results {
+            width: 100%;
+            border-collapse: collapse;
         }
 
         .results th,
         .results td {
-            border: 1px;
-            padding: 6px;
-            background-color: #dc0be3;
+            border: 1px solid #a8cbe0;
+            padding: 8px;
+            background-color: #fff;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .results th {
+            background-color: #2b7cb5;
+            color: #fff;
+            position: sticky;
+            top: 0;
+        }
+
+        label {
+            display: inline-block;
+            margin: 0 8px 8px 0;
         }
 
         button {
-            padding: 8px;
+            padding: 8px 14px;
+            border: 0;
+            border-radius: 8px;
+            background: #2b7cb5;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #216492;
         }
 
         /* селектор идентификатора */
         #y {
             padding: 8px;
-            margin: 8px;
+            margin: 8px 0;
+            width: 140px;
+            border: 1px solid #a8cbe0;
+            border-radius: 8px;
         }
 
         /* селектор атрибута */
@@ -52,7 +128,17 @@
 
         /* селектор детей */
         td > button {
-            margin: 8px;
+            margin: 8px 8px 0 0;
+        }
+
+        #clear {
+            background: #fff;
+            color: #2b7cb5;
+            border: 1px solid #2b7cb5;
+        }
+
+        #clear:hover {
+            background: #e7f3fb;
         }
 
         /* наследование */
@@ -67,78 +153,73 @@
         input[type="text"] {
             padding: 8px;
         }
+
+        audio {
+            margin-top: 16px;
+            width: 280px;
+        }
     </style>
 </head>
 <body>
 <h1 class = "zagolov">Вейгандт Владислав 501465 Вариант 12614</h1>
 <table class = "page">
-    <header>
+    <thead>
         <tr>
-            <td><p>Ввод</p> </td>
-            <td><p>картинка</p> </td>
-            <td><p>вывод</p> </td>
+            <th>Ввод</th>
+            <th>Картинка</th>
+            <th>Вывод</th>
         </tr>
-    </header>
-    <tr>
-        <td>
-            <p>X:</p>
-            <label><input type="checkbox" name="x" value="-4"> -4</label>
-            <label><input type="checkbox" name="x" value="-3"> -3</label>
-            <label><input type="checkbox" name="x" value="-2"> -2</label>
-            <label><input type="checkbox" name="x" value="-1"> -1</label>
-            <label><input type="checkbox" name="x" value="0"> 0</label>
-            <label><input type="checkbox" name="x" value="1"> 1</label>
-            <label><input type="checkbox" name="x" value="2"> 2</label>
-            <label><input type="checkbox" name="x" value="3"> 3</label>
-            <label><input type="checkbox" name="x" value="4"> 4</label>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <p>Y:</p>
-            <input type="text" name="y" id="y">
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <p>R:</p>
-            <label><input type="checkbox" name="r" value="1"> 1</label>
-            <label><input type="checkbox" name="r" value="2"> 2</label>
-            <label><input type="checkbox" name="r" value="3"> 3</label>
-            <label><input type="checkbox" name="r" value="4"> 4</label>
-            <label><input type="checkbox" name="r" value="5"> 5</label>
-            <button type="button" id="check">Проверить</button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-        </td>
-        <td class = "pict">
-            <canvas id="graph" width="400" height="400"></canvas>
-        </td>
-        <td class="output">
-            <table class = "results">
-                <thead>
-                <tr>
-                    <th>X</th>
-                    <th>Y</th>
-                    <th>R</th>
-                    <th>Попадание</th>
-                    <th>Текущее время</th>
-                    <th>Время работы</th>
-                </tr>
-                </thead>
-                <tbody id="results-body">
-                </tbody>
-            </table>
-            <p id="error"></p>
-        </td>
-    </tr>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <p>X:</p>
+                <label><input type="checkbox" name="x" value="-4"> -4</label>
+                <label><input type="checkbox" name="x" value="-3"> -3</label>
+                <label><input type="checkbox" name="x" value="-2"> -2</label>
+                <label><input type="checkbox" name="x" value="-1"> -1</label>
+                <label><input type="checkbox" name="x" value="0"> 0</label>
+                <label><input type="checkbox" name="x" value="1"> 1</label>
+                <label><input type="checkbox" name="x" value="2"> 2</label>
+                <label><input type="checkbox" name="x" value="3"> 3</label>
+                <label><input type="checkbox" name="x" value="4"> 4</label>
 
-<audio controls autoplay loop>
-    <source src="theme.mp3" type="audio/mpeg">
-</audio>
+                <p>Y:</p>
+                <input type="text" name="y" id="y">
+
+                <p>R:</p>
+                <label><input type="checkbox" name="r" value="1"> 1</label>
+                <label><input type="checkbox" name="r" value="2"> 2</label>
+                <label><input type="checkbox" name="r" value="3"> 3</label>
+                <label><input type="checkbox" name="r" value="4"> 4</label>
+                <label><input type="checkbox" name="r" value="5"> 5</label>
+                <br>
+                <button type="button" id="check">Проверить</button>
+                <button type="button" id="clear">Очистить историю</button>
+            </td>
+            <td class = "pict">
+                <canvas id="graph" width="400" height="400"></canvas>
+            </td>
+            <td class="output">
+                <table class = "results">
+                    <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>Y</th>
+                        <th>R</th>
+                        <th>Попадание</th>
+                        <th>Текущее время</th>
+                        <th>Время работы</th>
+                    </tr>
+                    </thead>
+                    <tbody id="results-body">
+                    </tbody>
+                </table>
+                <p id="error"></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 <script src="index.js"></script>
 </body>

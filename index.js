@@ -197,3 +197,9 @@ document.getElementById('check').addEventListener('click', function () {
     save(rows);
     renderTable(rows);
 });
+
+document.getElementById('clear').addEventListener('click', function () {
+    rows = [];
+    save(rows);
+    renderTable(rows);
+});
